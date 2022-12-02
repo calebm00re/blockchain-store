@@ -7,7 +7,7 @@ from secrets import Secrets
 import json
 
 
-def verify_payment(amount=None, addy=None):
+def verify_payment(amount, addy):
     # Getting the block history
     data = urlopen('https://api.blockcypher.com/v1/btc/test3/addrs/mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT/full?limit=50')
     total = ''
@@ -17,14 +17,15 @@ def verify_payment(amount=None, addy=None):
     j = json.loads(total)
 
     to_check = None
-    # print(j['txs'])
     for tx in j['txs']:
         for ad in tx['addresses']:
             if ad == addy:
                 to_check = tx
                 break
-        # print(tx['addresses'])
-    print(to_check)
-    return
+    
+    response = (to_check['total'] - to_check['fees']) > amount
+    response = response and not (to_check['double_spend'])
+    response = response and (to_check['confirmations'] >= 6)
+    return response
 
-verify_payment(addy='mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1')
+print(verify_payment(50, addy='mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1'))

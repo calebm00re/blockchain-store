@@ -16,7 +16,7 @@ def blacklist_tx(used_hash):
 def check_blacklist(possible_hash):
     f = open("history.txt", 'r')
     for line in f.readlines():
-        if possible_hash == line:
+        if possible_hash == line.strip():
             return False
     return True
 
@@ -44,7 +44,7 @@ def verify_payment(amount, addy):
 
     if response:
         blacklist_tx(to_check['hash'])
-        
+
     return response
 
 res = (verify_payment(50, 'mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1'))

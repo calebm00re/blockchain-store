@@ -6,6 +6,19 @@ from ecc import PrivateKey
 from secrets import Secrets
 import json
 
+def blacklist_tx(used_hash):
+    f = open("history.txt", "a")
+    f.write(used_hash)
+    f.write('\n')
+    f.close()
+    return
+
+def check_blacklist(possible_hash):
+    f = open("history.txt", 'r')
+    for line in f.readlines():
+        if possible_hash == line:
+            return False
+    return True
 
 def verify_payment(amount, addy):
     # Getting the block history
@@ -22,10 +35,17 @@ def verify_payment(amount, addy):
             if ad == addy:
                 to_check = tx
                 break
-    
+
+    # Ensure total, single-spend, and confirmations
     response = (to_check['total'] - to_check['fees']) > amount
     response = response and not (to_check['double_spend'])
     response = response and (to_check['confirmations'] >= 6)
+    response = response and check_blacklist(to_check['hash'])
+
+    if response:
+        blacklist_tx(to_check['hash'])
+        
     return response
 
-print(verify_payment(50, addy='mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1'))
+res = (verify_payment(50, 'mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1'))
+print(res)

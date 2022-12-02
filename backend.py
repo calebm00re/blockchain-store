@@ -12,8 +12,13 @@ def get_transaction_hex(price=None, gas=None, target_addy=None, change_addy=None
     store_addy = str(s.get_address())
     url = 'https://api.blockcypher.com/v1/btc/test3/addrs/' + store_addy + '/full?limit=50'
     data = urlopen(url)
-    data = data.readlines()
-    print(data)
+    total = ''
+    for line in data.readlines():
+        total += line.decode("utf-8")
+        # print(line.decode("utf-8"))
+    # print(j)
+    j = json.loads(total)
+    print(j['txs'])
     return
 
 get_transaction_hex()

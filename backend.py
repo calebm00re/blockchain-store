@@ -7,18 +7,24 @@ from secrets import Secrets
 import json
 
 
-def get_transaction_hex(price=None, gas=None, target_addy=None, change_addy=None):
-    s = Secrets()
-    store_addy = str(s.get_address())
-    url = 'https://api.blockcypher.com/v1/btc/test3/addrs/' + store_addy + '/full?limit=50'
-    data = urlopen(url)
+def verify_payment(amount=None, addy=None):
+    # Getting the block history
+    data = urlopen('https://api.blockcypher.com/v1/btc/test3/addrs/mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT/full?limit=50')
     total = ''
+    # Making the block history more useful
     for line in data.readlines():
         total += line.decode("utf-8")
-        # print(line.decode("utf-8"))
-    # print(j)
     j = json.loads(total)
-    print(j['txs'])
+
+    to_check = None
+    # print(j['txs'])
+    for tx in j['txs']:
+        for ad in tx['addresses']:
+            if ad == addy:
+                to_check = tx
+                break
+        # print(tx['addresses'])
+    print(to_check)
     return
 
-get_transaction_hex()
+verify_payment(addy='mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1')

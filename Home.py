@@ -16,28 +16,68 @@ st.set_page_config(page_icon='🛻', initial_sidebar_state='expanded', layout='w
 
 new_title = '<p style="font-family:sans-serif; font-size: 42px;">Welcome to Caleb and Blake\'s Auto Store!</p>'
 st.markdown(new_title, unsafe_allow_html=True)
-
-# st.markdown('<p class="big-font">Welcome to Caleb and Blake\'s Auto Store!</p>', unsafe_allow_html=True)
-# st.text('Welcome to Caleb and Blake\'s Auto Store')
+st.text('Please select a vehicle by clicking an image or using the sidebar')
 clicked = clickable_images(
     [
         "https://techcrunch.com/wp-content/uploads/2022/09/JP023_279WR5jvo53mde21dbrr902p5rahl1e.jpg",
         "https://www.motortrend.com/uploads/2022/01/2024-Chevrolet-Silverado-EV-Trail-Boss.jpg",
         "https://i.ibb.co/j5BDZWJ/yoda.png",
-        "https://media.gq-magazine.co.uk/photos/5d13aeaf976fa3a41af3b3f7/master/pass/mercedes-02-gq-12nov18_b.jpg"
+        "https://media.gq-magazine.co.uk/photos/5d13aeaf976fa3a41af3b3f7/master/pass/mercedes-02-gq-12nov18_b.jpg",
+        "https://media.chevrolet.com/content/dam/Media/images/US/Vehicles/Chevrolet/Cars/Camaro_ZL1/2018/Product/2018-Chevrolet-Camaro-ZL1-1LE-001.jpg",
+        "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2022/10/escalade.jpg",
+        "https://cdn.motor1.com/images/mgl/WOA3o/s1/2022-gmc-hummer-ev.jpg",
+        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/1804-jlgt3rs-0003-jpg-1524759932.jpg",
+        "https://www.autotrader.com/wp-content/uploads/2020/02/2020-Dodge-Challenger-.4..jpg"
     ],
-    titles=[f"Image #{str(i)}" for i in range(5)],
     div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
-    img_style={"margin": "2rem", "height": "10rem"},
+    img_style={"margin": "2rem", "height": "11rem"},
 )
 
+if clicked == 0:
+    js = "window.location.href = 'http://localhost:8501/Jeep'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
 if clicked == 1:
-    btn = st.button('Go to truck')
-    if btn:
-        js = "window.location.href = 'http://localhost:8501/Silverado'"  # Current tab
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+    js = "window.location.href = 'http://localhost:8501/Silverado'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 2:
+    js = "window.location.href = 'http://localhost:8501/GR86'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 3:
+    js = "window.location.href = 'http://localhost:8501/G63'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 4:
+    js = "window.location.href = 'http://localhost:8501/Camaro'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 5:
+    js = "window.location.href = 'http://localhost:8501/Cadillac'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 6:
+    js = "window.location.href = 'http://localhost:8501/Hummer'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 7:
+    js = "window.location.href = 'http://localhost:8501/Porshe'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
+if clicked == 8:
+    js = "window.location.href = 'http://localhost:8501/Challenger'"
+    html = '<img src onerror="{}">'.format(js)
+    div = Div(text=html)
+    st.bokeh_chart(div)
 
 # image = Image.open('sunrise.jpg')
 

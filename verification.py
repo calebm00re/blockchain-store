@@ -1,5 +1,10 @@
 from urllib.request import urlopen
 import json
+from ecc import PrivateKey
+from helper import decode_base58, SIGHASH_ALL
+from script import p2pkh_script, Script
+from tx import TxIn, TxOut, Tx
+from helper import hash256, little_endian_to_int
 
 def blacklist_tx(used_hash):
     f = open("history.txt", "a")
@@ -75,3 +80,31 @@ def verify_payment(amount, addy, ):
                 'reason': 'Your purchase has been confirmed! We will reach out for delivery arrangements!',
                 'severity': 0
             }
+
+def make_tx(price, change, prev_tx, passphrase, prev_index, address):
+    prev_tx = bytes.fromhex(prev_tx)
+
+    store_addy = 'mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT'
+
+    passphrase = str.encode(passphrase)
+    secret = little_endian_to_int(hash256(passphrase))
+    priv = PrivateKey(secret)
+
+    tx_ins = []
+    tx_ins.append(TxIn(prev_tx, prev_index))
+
+    tx_outs = []
+    h160 = decode_base58(store_addy)
+
+    script_pubkey = p2pkh_script(h160)
+    target_satoshis = int(price)
+    tx_outs.append(TxOut(target_satoshis, script_pubkey))
+    h160 = decode_base58(address)
+    script_pubkey = p2pkh_script(h160)
+    change_satoshis = int(change)
+    tx_outs.append(TxOut(change_satoshis, script_pubkey))
+
+    tx_obj = Tx(1, tx_ins, tx_outs, 0, testnet=True)
+    # print(tx_obj.sign_input(0, priv))
+    # print(tx_obj.serialize().hex())
+    return {'res': tx_obj.sign_input(0, priv), 'val': tx_obj.serialize().hex()}

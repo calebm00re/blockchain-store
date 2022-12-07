@@ -16,7 +16,7 @@ st.set_page_config(page_icon='🛻', initial_sidebar_state='expanded', layout='w
 
 new_title = '<p style="font-family:sans-serif; font-size: 42px;">Welcome to Caleb and Blake\'s Auto Store!</p>'
 st.markdown(new_title, unsafe_allow_html=True)
-st.text('Please select a vehicle by clicking an image or using the sidebar')
+st.text('Please select a vehicle by using the sidebar')
 clicked = clickable_images(
     [
         "https://techcrunch.com/wp-content/uploads/2022/09/JP023_279WR5jvo53mde21dbrr902p5rahl1e.jpg",
@@ -69,7 +69,7 @@ if clicked == 6:
     div = Div(text=html)
     st.bokeh_chart(div)
 if clicked == 7:
-    js = "window.location.href = 'http://localhost:8501/Porshe'"
+    js = "window.location.href = 'http://localhost:8501/Porsche'"
     html = '<img src onerror="{}">'.format(js)
     div = Div(text=html)
     st.bokeh_chart(div)

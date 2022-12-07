@@ -6,6 +6,6 @@ prices = {
     "Camaro": '70,000',
     "Cadillac": '80,000',
     "Hummer": '100,000',
-    "Porshe": '260,000',
+    "Porsche": '260,000',
     "Challenger": '60,000'
 }

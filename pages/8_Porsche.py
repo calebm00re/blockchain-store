@@ -3,7 +3,7 @@ from verification import verify_payment
 import time
 
 price = '260,000'
-st.text('Porshe')
+st.text('Porsche')
 st.image('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/1804-jlgt3rs-0003-jpg-1524759932.jpg')
 addy = st.text_input('Enter your purchasing address to confirm transaction')
 contact_type = st.selectbox('How would you like to arrange delivery', ('select', 'Email', 'Phone'))

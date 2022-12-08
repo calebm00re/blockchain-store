@@ -10,7 +10,6 @@ from PIL import Image
 from st_clickable_images import clickable_images
 import webbrowser
 import streamlit.components.v1 as components
-from streamlit_modal import Modal
 from bokeh.models.widgets import Div
 
 st.set_page_config(page_icon='🛻', initial_sidebar_state='expanded', layout='wide')
@@ -20,7 +19,11 @@ st.markdown(new_title, unsafe_allow_html=True)
 st.text('Please select a vehicle by using the sidebar')
 
 
-agree = st.checkbox("Click here for our address💸")
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    agree = st.checkbox("Click here for our address")
+
 if agree:
     st.warning("Our Address is mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1", icon = "💸")
 

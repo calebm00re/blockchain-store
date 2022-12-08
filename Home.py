@@ -10,6 +10,7 @@ from PIL import Image
 from st_clickable_images import clickable_images
 import webbrowser
 import streamlit.components.v1 as components
+from streamlit_modal import Modal
 from bokeh.models.widgets import Div
 
 st.set_page_config(page_icon='🛻', initial_sidebar_state='expanded', layout='wide')
@@ -17,6 +18,13 @@ st.set_page_config(page_icon='🛻', initial_sidebar_state='expanded', layout='w
 new_title = '<p style="font-family:sans-serif; font-size: 42px;">Welcome to Caleb and Blake\'s Auto Store!</p>'
 st.markdown(new_title, unsafe_allow_html=True)
 st.text('Please select a vehicle by using the sidebar')
+
+
+agree = st.checkbox("Click here for our address💸")
+if agree:
+    st.warning("Our Address is mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1", icon = "💸")
+
+
 clicked = clickable_images(
     [
         "https://techcrunch.com/wp-content/uploads/2022/09/JP023_279WR5jvo53mde21dbrr902p5rahl1e.jpg",
@@ -78,6 +86,8 @@ if clicked == 8:
     html = '<img src onerror="{}">'.format(js)
     div = Div(text=html)
     st.bokeh_chart(div)
+
+
 
 # image = Image.open('sunrise.jpg')
 

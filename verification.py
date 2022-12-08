@@ -6,9 +6,13 @@ from script import p2pkh_script, Script
 from tx import TxIn, TxOut, Tx
 from helper import hash256, little_endian_to_int
 
-def blacklist_tx(used_hash):
+def blacklist_tx(used_hash, contact):
     f = open("history.txt", "a")
     f.write(used_hash)
+    f.write('\n')
+    f.close()
+    f = open("email_history.txt", "a")
+    f.write(contact)
     f.write('\n')
     f.close()
     return
@@ -20,7 +24,7 @@ def check_blacklist(possible_hash):
             return False
     return True
 
-def verify_payment(amount, addy, ):
+def verify_payment(amount, addy, contact):
     # Getting the block history
     data = urlopen('https://api.blockcypher.com/v1/btc/test3/addrs/mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT/full?limit=50')
     total = ''
@@ -73,7 +77,7 @@ def verify_payment(amount, addy, ):
                 }
 
     if response:
-        blacklist_tx(to_check['hash'])
+        blacklist_tx(to_check['hash'], contact)
     
     return {
                 'result': True,
@@ -82,16 +86,16 @@ def verify_payment(amount, addy, ):
             }
 
 def make_tx(price, change, prev_tx, passphrase, prev_index, address):
-    prev_tx = bytes.fromhex(prev_tx)
+    prev_transaction = bytes.fromhex(prev_tx)
 
     store_addy = 'mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT'
 
-    passphrase = str.encode(passphrase)
-    secret = little_endian_to_int(hash256(passphrase))
+    ps = str.encode(passphrase)
+    secret = little_endian_to_int(hash256(ps))
     priv = PrivateKey(secret)
 
     tx_ins = []
-    tx_ins.append(TxIn(prev_tx, prev_index))
+    tx_ins.append(TxIn(prev_transaction, prev_index))
 
     tx_outs = []
     h160 = decode_base58(store_addy)
@@ -105,6 +109,4 @@ def make_tx(price, change, prev_tx, passphrase, prev_index, address):
     tx_outs.append(TxOut(change_satoshis, script_pubkey))
 
     tx_obj = Tx(1, tx_ins, tx_outs, 0, testnet=True)
-    # print(tx_obj.sign_input(0, priv))
-    # print(tx_obj.serialize().hex())
     return {'res': tx_obj.sign_input(0, priv), 'val': tx_obj.serialize().hex()}

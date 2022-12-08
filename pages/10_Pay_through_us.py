@@ -1,5 +1,5 @@
 import streamlit as st
-from verification import make_tx
+from verification import make_tx, blacklist_tx
 from prices import prices
 # from cryptos import *
 from blockcypher import pushtx
@@ -49,15 +49,11 @@ if btn:
     else:
         cost = prices[choice].replace(',', '')
         st.text(cost)
-        # c = Bitcoin(testnet=True)
         tx = make_tx(cost, change, prev_tx, ps, int(prev_index), addy)
-        # print(tx)
-        res = pushtx(tx['val'], api_key='88e698204c374ec4b06c8edc4b6f45e2')
-        # print(res)
-        res = {"test": 'test'}
-        if 'test' in res.keys():
-            st.error('L')
-        # complete(contact)
+        res = pushtx(tx_hex=tx['val'], coin_symbol='btc-testnet',api_key='88e698204c374ec4b06c8edc4b6f45e2')
+        if 'error' in res.keys():
+            st.error('Something went wrong, please try again', icon='🛑')
         else:
-            print(res)
+            blacklist_tx(res['tx']['hash'], contact)
+            st.success('Purchase Successful, we will reach out soon', icon="✅")
             st.balloons()

@@ -43,52 +43,23 @@ def main_page():
     )
 
     if clicked == 0:
-        # js = "window.location.href = 'http://localhost:8501/Jeep'"
-        # html = '<img src onerror="{}">'.format(js)
-        # div = Div(text=html)
-        # st.bokeh_chart(div)
         switch_page('Jeep')
-
     if clicked == 1:
-        js = "window.location.href = 'http://localhost:8501/Silverado'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Silverado')
     if clicked == 2:
-        js = "window.location.href = 'http://localhost:8501/GR86'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('GR86')
     if clicked == 3:
-        js = "window.location.href = 'http://localhost:8501/G63'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('G63')
     if clicked == 4:
-        js = "window.location.href = 'http://localhost:8501/Camaro'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Camaro')
     if clicked == 5:
-        js = "window.location.href = 'http://localhost:8501/Cadillac'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Cadillac')
     if clicked == 6:
-        js = "window.location.href = 'http://localhost:8501/Hummer'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Hummer')
     if clicked == 7:
-        js = "window.location.href = 'http://localhost:8501/Porsche'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Porsche')
     if clicked == 8:
-        js = "window.location.href = 'http://localhost:8501/Challenger'"
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
+        switch_page('Challenger')
 
 
 st.session_state.runpage = main_page

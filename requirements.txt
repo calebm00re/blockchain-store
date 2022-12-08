@@ -1,3 +1,4 @@
 st_clickable_images
 bokeh
 blockcypher
+streamlit_extras

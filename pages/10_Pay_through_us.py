@@ -1,7 +1,7 @@
 import streamlit as st
 from verification import make_tx, blacklist_tx
 from prices import prices
-# from cryptos import *
+import time
 from blockcypher import pushtx
 
 def complete(email, tx):
@@ -34,7 +34,7 @@ contact_type = st.selectbox('How would you like to arrange delivery', ('select',
 contact = st.text_input('Contact' if contact_type == 'select' else contact_type)
 
 choice = st.selectbox('Product',
-    ('select', 'Jeep', 'Silverado', 'GR86', 'Camaro', 'Cadillac', 'Hummer', 'Porsche', 'Challenger'))
+    ('select', 'Jeep', 'Silverado', 'GR86', 'G63', 'Camaro', 'Cadillac', 'Hummer', 'Porsche', 'Challenger'))
 
 st.text(' ')
 st.text(' ')
@@ -54,6 +54,8 @@ if btn:
         if 'error' in res.keys():
             st.error('Something went wrong, please try again', icon='🛑')
         else:
+            with st.spinner('Creating Transaction'):
+                time.sleep(5)
             blacklist_tx(res['tx']['hash'], contact)
             st.success('Purchase Successful, we will reach out soon', icon="✅")
             st.balloons()

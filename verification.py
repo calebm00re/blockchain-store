@@ -32,11 +32,16 @@ def verify_payment(amount, addy, contact):
     for line in data.readlines():
         total += line.decode("utf-8")
     j = json.loads(total)
-
+    print(j)
     to_check = None
+    f = open("history.txt", 'r')
+    past_hashes = []
+    for line in f.readlines():
+        past_hashes.append(line.strip())
+
     for tx in j['txs']:
         for ad in tx['addresses']:
-            if ad == addy:
+            if ad == addy and tx['hash'] not in past_hashes and tx['total'] >= amount:
                 to_check = tx
                 break
 
@@ -54,8 +59,13 @@ def verify_payment(amount, addy, contact):
                     'reason': 'This transaction has already been verified',
                     'severity': 1
                 }
-    response = response and (to_check['total'] - to_check['fees']) > amount
+    response = response and (to_check['total']) > amount
     if not response:
+        print(j)
+        print()
+        print(to_check)
+        print()
+        print(to_check['total'])
         return {
                     'result': False,
                     'reason': 'Funds too low, please contact staff.',

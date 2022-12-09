@@ -4,15 +4,6 @@ from prices import prices
 import time
 from blockcypher import pushtx
 
-def complete(email, tx):
-    f = open("history.txt", "a")
-    f.write(tx)
-    f.write('\n')
-    f.close()
-    f = open("email_history.txt", "a")
-    f.write(email)
-    f.write('\n')
-    f.close()
 
 new_title = '<p style="font-family:sans-serif; font-size: 42px;">Complete Your Purchase With Us!</p>'
 st.markdown(new_title, unsafe_allow_html=True)
@@ -56,6 +47,6 @@ if btn:
         else:
             with st.spinner('Creating Transaction'):
                 time.sleep(5)
-            blacklist_tx(res['tx']['hash'], contact)
+            blacklist_tx(res['tx']['hash'], contact, choice)
             st.success('Purchase Successful, we will reach out soon', icon="✅")
             st.balloons()

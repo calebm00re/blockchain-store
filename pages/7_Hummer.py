@@ -13,7 +13,7 @@ btn = st.button('Confirm')
 if btn:
     cost = int(price.replace(',', ''))
     if addy != '' and contact_type != 'select' and contact != '':
-        res = verify_payment(cost, addy, contact)
+        res = verify_payment(cost, addy, contact, 'Hummer')
         with st.spinner('Scanning our store wallet...'):
             time.sleep(3)
         if res['result']:

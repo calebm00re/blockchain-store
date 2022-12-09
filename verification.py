@@ -6,13 +6,17 @@ from script import p2pkh_script, Script
 from tx import TxIn, TxOut, Tx
 from helper import hash256, little_endian_to_int
 
-def blacklist_tx(used_hash, contact):
+def blacklist_tx(used_hash, contact, order):
     f = open("history.txt", "a")
     f.write(used_hash)
     f.write('\n')
     f.close()
     f = open("email_history.txt", "a")
     f.write(contact)
+    f.write('\n')
+    f.close()
+    f = open("orders.txt", "a")
+    f.write(order)
     f.write('\n')
     f.close()
     return
@@ -24,7 +28,7 @@ def check_blacklist(possible_hash):
             return False
     return True
 
-def verify_payment(amount, addy, contact):
+def verify_payment(amount, addy, contact, choice):
     # Getting the block history
     data = urlopen('https://api.blockcypher.com/v1/btc/test3/addrs/mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT/full?limit=50')
     total = ''
@@ -59,7 +63,7 @@ def verify_payment(amount, addy, contact):
                     'reason': 'This transaction has already been verified',
                     'severity': 1
                 }
-    response = response and (to_check['total']) > amount
+    response = response and (to_check['total']) >= amount
     if not response:
         print(j)
         print()
@@ -87,7 +91,7 @@ def verify_payment(amount, addy, contact):
                 }
 
     if response:
-        blacklist_tx(to_check['hash'], contact)
+        blacklist_tx(to_check['hash'], contact, choice)
     
     return {
                 'result': True,

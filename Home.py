@@ -23,7 +23,7 @@ def main_page():
     st.text('Please select a vehicle by using the sidebar')
 
 
-    st.success("Our Address is mrgVZ8BxXChc2xjXzX25ViYsppLfLoBfC1", icon = "💸")
+    st.success("Our Address is mnMCmnP16B6uK2VeCrAEFwpwEHKpNhxcLT", icon = "💸")
 
 
     clicked = clickable_images(
